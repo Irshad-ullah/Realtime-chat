@@ -38,3 +38,9 @@ __pycache__/
 tests/__pycache__/
 .Jenkinsfile.swp
 .Dockerfile.swp
+
+# Local-only files — not needed in repo
+Jenkinsfile
+Dockerfile.test
+generate_report.py
+Assignment3_Report.docx
