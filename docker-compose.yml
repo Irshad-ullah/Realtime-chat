@@ -1,7 +1,6 @@
-version: '3.8'
+version: "3.8"
 
 services:
-
   mongo:
     image: mongo:7
     container_name: realchat-mongo
@@ -9,18 +8,18 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db    # data persists even if container restarts
+      - mongo-data:/data/db # data persists even if container restarts
 
   app:
-    image: YOUR_DOCKERHUB_USERNAME/realchat-app:latest
+    build: 1rshadullah/realchat-app # builds the image locally from Dockerfile
     container_name: realchat-app
     restart: always
     ports:
       - "3000:3000"
     env_file:
-      - .env                   # reads your .env file on EC2
+      - .env # reads your .env file on EC2
     depends_on:
-      - mongo                  # waits for mongo container to start first
+      - mongo # waits for mongo container to start first
 
 volumes:
-  mongo-data:                  # named volume — MongoDB data survives container restarts
+  mongo-data: # named volume — MongoDB data survives container restarts

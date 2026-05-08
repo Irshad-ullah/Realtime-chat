@@ -1,11 +1,8 @@
 # Dependencies
 node_modules/
 
-# Environment files (keep .env.example and .env.production as templates)
-.env
-.env.local
-.env.development
-.env.test
+# Environment files — all ignored, create .env manually on the server
+.env.*
 
 # Logs
 *.log
@@ -38,6 +35,6 @@ __pycache__/
 *.pyc
 
 # Pytest / Selenium
-.pytest_cache/
 tests/__pycache__/
-tests/pages/__pycache__/
+.Jenkinsfile.swp
+.Dockerfile.swp
