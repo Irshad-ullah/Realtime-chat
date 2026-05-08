@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mongo:
-    image: mongo:7
+    image: mongo:7.0
     container_name: realchat-mongo
     restart: always
     ports:
