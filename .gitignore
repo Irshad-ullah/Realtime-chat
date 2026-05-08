@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Environment files (keep .env.example and .env.production as templates)
+.env
+.env.local
+.env.development
+.env.test
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS generated
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.swp
+*.swo
+
+# Build / cache
+.cache/
+dist/
+build/
+.npm/
+
+# Test reports and coverage
+tests/reports/
+coverage/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# Pytest / Selenium
+.pytest_cache/
+tests/__pycache__/
+tests/pages/__pycache__/

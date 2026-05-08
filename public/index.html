@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RealChat — Demo Client</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- ── Auth Panel ───────────────────────────────────────── -->
+      <div id="auth-panel" class="panel">
+        <div class="card">
+          <h1>🗨️ RealChat</h1>
+          <p class="subtitle">A real-time business chat system</p>
+
+          <div class="tabs">
+            <button class="tab active" data-tab="login">Login</button>
+            <button class="tab" data-tab="register-user">Register User</button>
+            <button class="tab" data-tab="register-biz">
+              Register Business
+            </button>
+          </div>
+
+          <!-- Login -->
+          <form id="login-form" class="tab-content active">
+            <input type="email" id="login-email" placeholder="Email" required />
+            <input
+              type="password"
+              id="login-password"
+              placeholder="Password"
+              required
+            />
+            <input
+              type="text"
+              id="login-business-id"
+              placeholder="Business ID"
+              required
+            />
+            <button type="submit">Login</button>
+          </form>
+
+          <!-- Register User -->
+          <form id="register-user-form" class="tab-content">
+            <input type="text" id="ru-name" placeholder="Full Name" required />
+            <input type="email" id="ru-email" placeholder="Email" required />
+            <input
+              type="password"
+              id="ru-password"
+              placeholder="Password"
+              required
+            />
+            <input
+              type="text"
+              id="ru-business-id"
+              placeholder="Business ID"
+              required
+            />
+            <button type="submit">Register</button>
+          </form>
+
+          <!-- Register Business -->
+          <form id="register-biz-form" class="tab-content">
+            <input
+              type="text"
+              id="rb-name"
+              placeholder="Business Name"
+              required
+            />
+            <input
+              type="email"
+              id="rb-email"
+              placeholder="Business Email"
+              required
+            />
+            <input
+              type="password"
+              id="rb-password"
+              placeholder="Password"
+              required
+            />
+            <button type="submit">Register Business</button>
+          </form>
+
+          <p id="auth-message" class="message"></p>
+        </div>
+      </div>
+
+      <!-- ── Chat Panel ───────────────────────────────────────── -->
+      <div id="chat-panel" class="panel hidden">
+        <aside id="sidebar">
+          <div class="sidebar-header">
+            <div>
+              <span id="current-user-name" class="username"></span>
+              <span class="badge online">● Online</span>
+            </div>
+            <button id="logout-btn">Logout</button>
+          </div>
+          <h3>Contacts</h3>
+          <ul id="user-list"></ul>
+        </aside>
+
+        <main id="chat-area">
+          <div id="chat-header">
+            <span id="chat-with-name">Select a contact to start chatting</span>
+            <span id="typing-indicator"></span>
+          </div>
+          <div id="messages"></div>
+          <form id="message-form" class="message-form hidden">
+            <input
+              type="text"
+              id="message-input"
+              placeholder="Type a message…"
+              autocomplete="off"
+            />
+            <button type="submit">Send</button>
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/client.js"></script>
+  </body>
+</html>
