@@ -58,7 +58,7 @@ pipeline {
                         -v $(pwd):/app \
                         -w /app \
                         -e BASE_URL=${APP_URL} \
-                        joyzoursky/python-chromedriver:py3.11 \
+                        selenium/standalone-chrome \
                         sh -c "pip install -r tests/requirements.txt -q && pytest tests/test_realchat.py -v --tb=short"
                 '''
             }
