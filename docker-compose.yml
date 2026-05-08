@@ -11,7 +11,7 @@ services:
       - mongo-data:/data/db # data persists even if container restarts
 
   app:
-    build: 1rshadullah/realchat-app # builds the image locally from Dockerfile
+    image: 1rshadullah/realchat-app # builds the image locally from Dockerfile
     container_name: realchat-app
     restart: always
     ports:
