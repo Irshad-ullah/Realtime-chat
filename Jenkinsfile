@@ -54,7 +54,7 @@ pipeline {
                     cd ${PROJECT_DIR}
 
                     docker run --rm \
-                        --network ${PROJECT_DIR}_default \
+                        --network realtime-chat_default \
                         -v $(pwd):/app \
                         -w /app \
                         -e BASE_URL=${APP_URL} \
