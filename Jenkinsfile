@@ -48,19 +48,23 @@ pipeline {
             }
         }
 
-        stage('Run Selenium Tests') {
-            steps {
-                sh '''
-                    cd ${PROJECT_DIR}
-
-                    docker run --rm \
-                        --network realtime-chat_default \
-                        -v $(pwd):/app \
-                        -w /app \
-                        -e BASE_URL=${APP_URL} \
-                        joyzoursky/python-chromedriver:3.9-alpine \
-                        sh -c "pip install -r tests/requirements.txt -q && pytest tests/test_realchat.py -v --tb=short"
-                '''
+    stage('Run Selenium Tests') {
+        steps {
+             sh '''
+                cd ${PROJECT_DIR}
+                docker run --rm \
+                       --user $(id -u):$(id -g) \
+                --network realtime-chat_default \
+                -v $(pwd):/app \
+                -w /app \
+                -e BASE_URL=${APP_URL} \
+                -e HOME=/tmp \
+                -e PYTHONDONTWRITEBYTECODE=1 \
+                -e PYTHONPYCACHEPREFIX=/tmp/pycache \
+                -e PYTEST_ADDOPTS="-o cache_dir=/tmp/.pytest_cache" \
+                joyzoursky/python-chromedriver:3.9-alpine \
+                sh -c "pip install --user -r tests/requirements.txt -q && python -m pytest tests/test_realchat.py -v --tb=short"
+        '''
             }
         }
 
