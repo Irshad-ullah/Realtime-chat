@@ -4,9 +4,7 @@ A production-ready real-time chat system built with **Node.js · Express · Mong
 
 ---
 
-## 📁 Folder Structure
-
-changes
+## 📁 Folder Structures
 
 ```
 realtime-chat/
