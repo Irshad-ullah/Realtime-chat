@@ -6,6 +6,8 @@ A production-ready real-time chat system built with **Node.js · Express · Mong
 
 ## 📁 Folder Structure
 
+changes
+
 ```
 realtime-chat/
 ├── server.js              # Entry point — creates HTTP server, mounts Socket.IO
@@ -56,6 +58,7 @@ realtime-chat/
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js ≥ 18
 - MongoDB running locally (or Atlas URI)
 - Redis running locally
@@ -82,13 +85,13 @@ Open **http://localhost:3000** in your browser.
 
 **This system uses server-side sessions backed by Redis.** Here's why:
 
-| | Sessions (chosen) | JWT |
-|---|---|---|
-| Invalidation | Instant — delete Redis key | Hard — requires a deny-list |
-| Server state | Required (Redis) | Stateless |
-| Horizontal scale | Redis = shared state across nodes ✅ | Any node can verify ✅ |
-| Complexity | Lower for web apps | Higher (refresh tokens, rotation) |
-| Security | HttpOnly cookie, not accessible to JS | Token stored in JS memory or localStorage |
+|                  | Sessions (chosen)                     | JWT                                       |
+| ---------------- | ------------------------------------- | ----------------------------------------- |
+| Invalidation     | Instant — delete Redis key            | Hard — requires a deny-list               |
+| Server state     | Required (Redis)                      | Stateless                                 |
+| Horizontal scale | Redis = shared state across nodes ✅  | Any node can verify ✅                    |
+| Complexity       | Lower for web apps                    | Higher (refresh tokens, rotation)         |
+| Security         | HttpOnly cookie, not accessible to JS | Token stored in JS memory or localStorage |
 
 For a business chat SaaS (same-origin web app), sessions win on simplicity and instant logout. JWT is better for mobile-first APIs or microservices.
 
@@ -156,56 +159,65 @@ Online users:
 ## 📡 REST API Reference
 
 ### Business
-| Method | Endpoint | Body | Auth |
-|--------|----------|------|------|
-| POST | `/api/business/register` | `{ name, email, password }` | ❌ |
-| POST | `/api/business/login` | `{ email, password }` | ❌ |
-| GET | `/api/business/:id` | — | ❌ |
+
+| Method | Endpoint                 | Body                        | Auth |
+| ------ | ------------------------ | --------------------------- | ---- |
+| POST   | `/api/business/register` | `{ name, email, password }` | ❌   |
+| POST   | `/api/business/login`    | `{ email, password }`       | ❌   |
+| GET    | `/api/business/:id`      | —                           | ❌   |
 
 ### Users
-| Method | Endpoint | Body | Auth |
-|--------|----------|------|------|
-| POST | `/api/users/register` | `{ name, email, password, businessId }` | ❌ |
-| POST | `/api/users/login` | `{ email, password, businessId }` | ❌ |
-| POST | `/api/users/logout` | — | ✅ |
-| GET | `/api/users/me` | — | ✅ |
-| GET | `/api/users` | — | ✅ |
+
+| Method | Endpoint              | Body                                    | Auth |
+| ------ | --------------------- | --------------------------------------- | ---- |
+| POST   | `/api/users/register` | `{ name, email, password, businessId }` | ❌   |
+| POST   | `/api/users/login`    | `{ email, password, businessId }`       | ❌   |
+| POST   | `/api/users/logout`   | —                                       | ✅   |
+| GET    | `/api/users/me`       | —                                       | ✅   |
+| GET    | `/api/users`          | —                                       | ✅   |
 
 ### Chat
-| Method | Endpoint | Body | Auth |
-|--------|----------|------|------|
-| GET | `/api/chat/:receiverId` | — | ✅ |
-| POST | `/api/chat/send` | `{ receiverId, content }` | ✅ |
+
+| Method | Endpoint                | Body                      | Auth |
+| ------ | ----------------------- | ------------------------- | ---- |
+| GET    | `/api/chat/:receiverId` | —                         | ✅   |
+| POST   | `/api/chat/send`        | `{ receiverId, content }` | ✅   |
 
 ### Socket.IO Events
-| Direction | Event | Payload |
-|-----------|-------|---------|
-| Client → Server | `send_message` | `{ receiverId, content }` |
-| Client → Server | `typing_start` | `{ receiverId }` |
-| Client → Server | `typing_stop` | `{ receiverId }` |
-| Server → Client | `new_message` | Full message object |
-| Server → Client | `message_sent` | Full message object (echo) |
-| Server → Client | `online_users` | `[userId, ...]` |
-| Server → Client | `user_offline` | `{ userId }` |
-| Server → Client | `user_typing` | `{ userId, name }` |
-| Server → Client | `user_stopped_typing` | `{ userId }` |
+
+| Direction       | Event                 | Payload                    |
+| --------------- | --------------------- | -------------------------- |
+| Client → Server | `send_message`        | `{ receiverId, content }`  |
+| Client → Server | `typing_start`        | `{ receiverId }`           |
+| Client → Server | `typing_stop`         | `{ receiverId }`           |
+| Server → Client | `new_message`         | Full message object        |
+| Server → Client | `message_sent`        | Full message object (echo) |
+| Server → Client | `online_users`        | `[userId, ...]`            |
+| Server → Client | `user_offline`        | `{ userId }`               |
+| Server → Client | `user_typing`         | `{ userId, name }`         |
+| Server → Client | `user_stopped_typing` | `{ userId }`               |
 
 ---
 
 ## 🗄️ MongoDB Schemas
 
 ### Business
+
 ```js
-{ name, email, password (hashed), isActive, timestamps }
+{
+  (name, email, password(hashed), isActive, timestamps);
+}
 ```
 
 ### User
+
 ```js
 { name, email, password (hashed), business: ObjectId, isActive, timestamps }
 // Unique index: { email, business } — same email allowed across different businesses
 ```
 
 ### Message
+
 ```js
 { sender: ObjectId, receiver: ObjectId, business: ObjectId, content, isRead, timestamps }
 // Compound index: { sender, receiver, createdAt } for fast conversation queries
