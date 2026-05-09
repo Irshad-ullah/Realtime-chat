@@ -6,6 +6,8 @@ A production-ready real-time chat system built with **Node.js · Express · Mong
 
 ## 📁 Folder Structures
 
+changes
+
 ```
 realtime-chat/
 ├── server.js              # Entry point — creates HTTP server, mounts Socket.IO
