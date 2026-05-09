@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         REPO_URL = 'https://github.com/Irshad-ullah/Realtime-chat.git'
-        APP_URL = 'http://localhost:3000'
+        APP_URL = 'http://app:3000'
         PROJECT_DIR = 'Realtime-chat'
     }
 
@@ -58,7 +58,7 @@ pipeline {
                         -v $(pwd):/app \
                         -w /app \
                         -e BASE_URL=${APP_URL} \
-                        selenium/standalone-chrome \
+                        joyzoursky/python-chromedriver:3.9-alpine \
                         sh -c "pip install -r tests/requirements.txt -q && pytest tests/test_realchat.py -v --tb=short"
                 '''
             }
@@ -78,5 +78,3 @@ pipeline {
                 docker compose logs --tail=50 || true
             '''
         }
-    }
-}
